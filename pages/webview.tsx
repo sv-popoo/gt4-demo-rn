@@ -45,12 +45,10 @@ export default class WebviewDemo extends PureComponent<any, any> {
   }
   render() {
     let sources =
-      (Platform.OS === 'android'
-        ? 'file:///android_asset/'
-        : 'http://0.0.0.0:8081/') +
-      'Static.bundle/demo.html?data=' +
-      encodeURIComponent(
-        '{"captchaId":"0a617ddc983efc42640258512cbf0167","protocol":"https://"}',
+    (Platform.OS === 'android'
+    ? 'file:///android_asset/': 'https://ops.btest.popoo.foundation/') +
+    'demo.html?data=' + encodeURIComponent (
+    '{"captchaId": "0a617ddc983efc42640258512cbf0167", "protocol":"https://"}',
       );
     //页面加载完成触发
     const webViewOnLoad = (syntheticEvent: {nativeEvent: any}) => {
@@ -61,6 +59,7 @@ export default class WebviewDemo extends PureComponent<any, any> {
     };
     //获取设备的宽度和高度
     var {height: deviceHeight, width: deviceWidth} = Dimensions.get('window');
+   
     return (
       <View style={{width: deviceWidth, height: deviceHeight - 60}}>
         <WebView
@@ -69,6 +68,7 @@ export default class WebviewDemo extends PureComponent<any, any> {
           source={{uri: sources}}
           // source={{uri: sources}}
           onLoad={webViewOnLoad}
+          javaScriptEnabled={true}
           originWhitelist={['*']}
           automaticallyAdjustContentInsets={false}
           onMessage={(e: {nativeEvent: {data?: any}}) => {
